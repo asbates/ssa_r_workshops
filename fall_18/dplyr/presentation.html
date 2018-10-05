@@ -108,10 +108,37 @@
 
 <ul class = 'build'>
 <li>Core functions of <code>dplyr</code></li>
-<li>Other useful functions</li>
+<li>Other useful functions as time permits</li>
 </ul>
 
-</article></slide><slide class=""><hgroup><h2>The Data</h2></hgroup><article  id="the-data"></article></slide>
+</article></slide><slide class=""><hgroup><h2>The Data</h2></hgroup><article  id="the-data">
+
+<ul class = 'build'>
+<li>Review of burritos in San Diego</li>
+<li>Project of <a href='https://srcole.github.io/100burritos/' title=''>Scott Cole</a>, a neuroscience student at UCSD</li>
+<li>Find it
+
+<ul>
+<li>on his <a href='https://github.com/asbates/ssa_r_workshops/tree/master/fall_18/data' title=''>website</a></li>
+<li>or <a href='https://www.kaggle.com/srcole/burritos-in-san-diego/version/2#burritos_01022018.csv' title=''>Kaggle</a></li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Setup</h2></hgroup><article  id="setup">
+
+<ul>
+<li>Download the burrito data
+
+<ul>
+<li>Make sure you know where it is</li>
+</ul></li>
+<li>Run the following code:</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>install.packages(&quot;dplyr&quot;, &quot;readr&quot;) # readr is for reading in data
+library(dplyr)
+library(readr)
+burrito &lt;- read_csv(&quot;path/to/file/burritos_01022018.csv&quot;)</pre></article></slide>
 
 
   <slide class="backdrop"></slide>

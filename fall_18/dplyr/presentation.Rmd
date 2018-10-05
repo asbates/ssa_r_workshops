@@ -6,7 +6,7 @@ output: ioslides_presentation
 ---
 
 
-## Quiz
+## Quiz 
 
 > - Question 1: Do you like burritos?
 > - Correct Answer: duh.
@@ -16,5 +16,26 @@ output: ioslides_presentation
 > - Core functions of  `dplyr`
 > - Other useful functions as time permits
 
-## The Data
+## The Data 
+
+> - Review of burritos in San Diego
+> - Project of [Scott Cole](https://srcole.github.io/100burritos/), a neuroscience student at UCSD
+> - Find it
+>     - on his [website](https://github.com/asbates/ssa_r_workshops/tree/master/fall_18/data)
+>     - or [Kaggle](https://www.kaggle.com/srcole/burritos-in-san-diego/version/2#burritos_01022018.csv)
+
+
+## Setup
+
+ - Download the burrito data
+     - Make sure you know where it is
+ - Run the following code:
+
+```{r, eval = FALSE}
+install.packages("dplyr", "readr") # readr is for reading in data
+library(dplyr)
+library(readr)
+burrito <- read_csv("path/to/file/burritos_01022018.csv")
+```
+     
 
