@@ -1,0 +1,20 @@
+---
+title: "SSA R Coding Workshop 2"
+subtitle: "Data Cleaning & Manipulation With Dplyr"
+author: "Andrew Bates"
+output: ioslides_presentation
+---
+
+
+## Quiz
+
+> - Question 1: Do you like burritos?
+> - Correct Answer: duh.
+
+## This Workshop
+
+> - Core functions of  `dplyr`
+> - Other useful functions as time permits
+
+## The Data
+
