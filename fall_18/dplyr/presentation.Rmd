@@ -6,11 +6,6 @@ output: ioslides_presentation
 ---
 
 
-## Quiz 
-
-> - Question 1: Do you like burritos?
-> - Correct Answer: duh.
-
 ## This Workshop
 
 > - Core functions of  `dplyr`
@@ -31,11 +26,110 @@ output: ioslides_presentation
      - Make sure you know where it is
  - Run the following code:
 
-```{r, eval = FALSE}
+```{r setup_shown, eval = FALSE}
 install.packages("dplyr", "readr") # readr is for reading in data
 library(dplyr)
 library(readr)
-burrito <- read_csv("path/to/file/burritos_01022018.csv")
+dirty_burrito <- read_csv("path/to/file/burritos_01022018.csv")
 ```
      
+```{r setup_hidden, echo = FALSE, message = FALSE, warning = FALSE}
+library(dplyr)
+library(readr)
+library(here)
+dirty_burrito <- read_csv(here("fall_18", "data", "burritos_01022018.csv"))
 
+```
+
+
+## First Look
+
+```{r first_look_print}
+dirty_burrito[, 1:10]
+```
+
+## First Look
+```{r first_look_names}
+names(dirty_burrito)
+```
+
+
+## Some Issues
+
+> - There are problems with some names:
+>     - `readr` already took care of one issue (2 `Salsa` columns)
+>     - Spaces in names are not very R friendly (`Mass (g)`)
+>     - `Bell peper` is spelled wrong
+>     - Inconsistent naming scheme (capitalization)
+> - There are some `NA` values (not necessarily a problem)
+> - `Chips` encoding is not so obvious
+> - What's the difference between `Tortilla` and `Wrap`?
+
+## Fixing The Issues
+
+> - To simplify things, let's start by:
+>     - `select`ing just a few variables to work with
+>     - and `rename`ing them
+
+## Selecting Variables of Interest
+
+```{r select_vars}
+clean_burrito <- dirty_burrito %>%
+  select(Location,
+         Burrito,
+         Yelp,
+         Google,
+         Cost,
+         `Mass (g)`,
+         Tortilla,
+         Meat,
+         Synergy,
+         overall,
+         Beans)
+```
+
+## Selecting Variables of Interest
+```{r clean_first_pass}
+clean_burrito
+```
+
+
+## Rename Variables
+
+```{r rename}
+clean_burrito <- clean_burrito %>%
+  rename(
+    location = Location,
+    burrito = Burrito,
+    yelp_rating = Yelp,
+    google_rating = Google,
+    cost = Cost,
+    mass = `Mass (g)`,
+    tortilla = Tortilla,
+    meat = Meat,
+    synergy = Synergy,
+    overall_rating = overall,
+    beans = Beans
+  )
+```
+
+## Rename Variables
+
+```{r}
+clean_burrito
+```
+
+## Quiz 1
+
+> - What does `select` do?
+>     - `select`s variables (columns)
+> - What does `rename` do?
+>     - This should be obvious
+> - What does `%>%` do?
+>     - The 'pipe' operator
+>     - From the package `magrittr`. Comes with `dplyr`
+>     - Improves readability of code
+>         - `x %>% h %>% g %>% f` instead of `f(g(h(x)))`
+>         - "Take x. Apply the function h. Then g. Then f."
+>     - First argument is always the data
+>     - Allows for easy chaining of operations on data frame

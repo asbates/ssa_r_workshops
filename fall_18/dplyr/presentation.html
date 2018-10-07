@@ -97,14 +97,7 @@
           </hgroup>
   </slide>
 
-<slide class=""><hgroup><h2>Quiz</h2></hgroup><article  id="quiz">
-
-<ul class = 'build'>
-<li>Question 1: Do you like burritos?</li>
-<li>Correct Answer: duh.</li>
-</ul>
-
-</article></slide><slide class=""><hgroup><h2>This Workshop</h2></hgroup><article  id="this-workshop">
+<slide class=""><hgroup><h2>This Workshop</h2></hgroup><article  id="this-workshop">
 
 <ul class = 'build'>
 <li>Core functions of <code>dplyr</code></li>
@@ -138,7 +131,175 @@
 <pre class = 'prettyprint lang-r'>install.packages(&quot;dplyr&quot;, &quot;readr&quot;) # readr is for reading in data
 library(dplyr)
 library(readr)
-burrito &lt;- read_csv(&quot;path/to/file/burritos_01022018.csv&quot;)</pre></article></slide>
+dirty_burrito &lt;- read_csv(&quot;path/to/file/burritos_01022018.csv&quot;)</pre>
+
+</article></slide><slide class=""><hgroup><h2>First Look</h2></hgroup><article  id="first-look">
+
+<pre class = 'prettyprint lang-r'>dirty_burrito[, 1:10]</pre>
+
+<pre >## # A tibble: 385 x 10
+##    Location Burrito Date  Neighborhood Address URL    Yelp Google Chips
+##    &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;
+##  1 Donato&#39;… Califo… 1/18… Miramar      6780 M… http…   3.5    4.2 &lt;NA&gt; 
+##  2 Oscar&#39;s… Califo… 1/24… San Marcos   225 S … http…   3.5    3.3 &lt;NA&gt; 
+##  3 Oscar&#39;s… Carnit… 1/24… &lt;NA&gt;         &lt;NA&gt;    &lt;NA&gt;   NA     NA   &lt;NA&gt; 
+##  4 Oscar&#39;s… Carne … 1/24… &lt;NA&gt;         &lt;NA&gt;    &lt;NA&gt;   NA     NA   &lt;NA&gt; 
+##  5 Pollos … Califo… 1/27… Carlsbad     3055 H… http…   4      3.8 x    
+##  6 Pollos … combo … 1/28… &lt;NA&gt;         &lt;NA&gt;    &lt;NA&gt;   NA     NA   &lt;NA&gt; 
+##  7 Nico&#39;s … Califo… 1/30… Carmel Vall… 3860 V… http…   3      2.9 &lt;NA&gt; 
+##  8 Nico&#39;s … Carnit… 1/30… &lt;NA&gt;         &lt;NA&gt;    &lt;NA&gt;   NA     NA   &lt;NA&gt; 
+##  9 Los Pri… Monste… 2/1/… UTC          7770 R… http…   3      3.7 x    
+## 10 JV&#39;s Me… Carne … 2/6/… Morena       1112 M… http…   4      4.1 &lt;NA&gt; 
+## # ... with 375 more rows, and 1 more variable: Cost &lt;dbl&gt;</pre>
+
+</article></slide><slide class=""><hgroup><h2>First Look</h2></hgroup><article  id="first-look-1">
+
+<pre class = 'prettyprint lang-r'>names(dirty_burrito)</pre>
+
+<pre >##  [1] &quot;Location&quot;       &quot;Burrito&quot;        &quot;Date&quot;           &quot;Neighborhood&quot;  
+##  [5] &quot;Address&quot;        &quot;URL&quot;            &quot;Yelp&quot;           &quot;Google&quot;        
+##  [9] &quot;Chips&quot;          &quot;Cost&quot;           &quot;Hunger&quot;         &quot;Mass (g)&quot;      
+## [13] &quot;Density (g/mL)&quot; &quot;Length&quot;         &quot;Circum&quot;         &quot;Volume&quot;        
+## [17] &quot;Tortilla&quot;       &quot;Temp&quot;           &quot;Meat&quot;           &quot;Fillings&quot;      
+## [21] &quot;Meat:filling&quot;   &quot;Uniformity&quot;     &quot;Salsa&quot;          &quot;Synergy&quot;       
+## [25] &quot;Wrap&quot;           &quot;overall&quot;        &quot;Rec&quot;            &quot;Reviewer&quot;      
+## [29] &quot;Notes&quot;          &quot;Unreliable&quot;     &quot;NonSD&quot;          &quot;Beef&quot;          
+## [33] &quot;Pico&quot;           &quot;Guac&quot;           &quot;Cheese&quot;         &quot;Fries&quot;         
+## [37] &quot;Sour cream&quot;     &quot;Pork&quot;           &quot;Chicken&quot;        &quot;Shrimp&quot;        
+## [41] &quot;Fish&quot;           &quot;Rice&quot;           &quot;Beans&quot;          &quot;Lettuce&quot;       
+## [45] &quot;Tomato&quot;         &quot;Bell peper&quot;     &quot;Carrots&quot;        &quot;Cabbage&quot;       
+## [49] &quot;Sauce&quot;          &quot;Salsa_1&quot;        &quot;Cilantro&quot;       &quot;Onion&quot;         
+## [53] &quot;Taquito&quot;        &quot;Pineapple&quot;      &quot;Ham&quot;            &quot;Chile relleno&quot; 
+## [57] &quot;Nopales&quot;        &quot;Lobster&quot;        &quot;Queso&quot;          &quot;Egg&quot;           
+## [61] &quot;Mushroom&quot;       &quot;Bacon&quot;          &quot;Sushi&quot;          &quot;Avocado&quot;       
+## [65] &quot;Corn&quot;           &quot;Zucchini&quot;</pre>
+
+</article></slide><slide class=""><hgroup><h2>Some Issues</h2></hgroup><article  id="some-issues">
+
+<ul class = 'build'>
+<li>There are problems with some names:
+
+<ul>
+<li><code>readr</code> already took care of one issue (2 <code>Salsa</code> columns)</li>
+<li>Spaces in names are not very R friendly (<code>Mass (g)</code>)</li>
+<li><code>Bell peper</code> is spelled wrong</li>
+<li>Inconsistent naming scheme (capitalization)</li>
+</ul></li>
+<li>There are some <code>NA</code> values (not necessarily a problem)</li>
+<li><code>Chips</code> encoding is not so obvious</li>
+<li>What&#39;s the difference between <code>Tortilla</code> and <code>Wrap</code>?</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Fixing The Issues</h2></hgroup><article  id="fixing-the-issues">
+
+<ul class = 'build'>
+<li>To simplify things, let&#39;s start by:
+
+<ul>
+<li><code>select</code>ing just a few variables to work with</li>
+<li>and <code>rename</code>ing them</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Selecting Variables of Interest</h2></hgroup><article  id="selecting-variables-of-interest">
+
+<pre class = 'prettyprint lang-r'>clean_burrito &lt;- dirty_burrito %&gt;%
+  select(Location,
+         Burrito,
+         Yelp,
+         Google,
+         Cost,
+         `Mass (g)`,
+         Tortilla,
+         Meat,
+         Synergy,
+         overall,
+         Beans)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Selecting Variables of Interest</h2></hgroup><article  id="selecting-variables-of-interest-1">
+
+<pre class = 'prettyprint lang-r'>clean_burrito</pre>
+
+<pre >## # A tibble: 385 x 11
+##    Location Burrito  Yelp Google  Cost `Mass (g)` Tortilla  Meat Synergy
+##    &lt;chr&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;      &lt;int&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1 Donato&#39;… Califo…   3.5    4.2  6.49         NA      3     3       4  
+##  2 Oscar&#39;s… Califo…   3.5    3.3  5.45         NA      2     2.5     2.5
+##  3 Oscar&#39;s… Carnit…  NA     NA    4.85         NA      3     2.5     3  
+##  4 Oscar&#39;s… Carne …  NA     NA    5.25         NA      3     3.5     4  
+##  5 Pollos … Califo…   4      3.8  6.59         NA      4     4       4.5
+##  6 Pollos … combo …  NA     NA    6.99         NA      3     5       4  
+##  7 Nico&#39;s … Califo…   3      2.9  7.19         NA      2     3       2  
+##  8 Nico&#39;s … Carnit…  NA     NA    6.99         NA      2.5   3       2.5
+##  9 Los Pri… Monste…   3      3.7  9.25         NA      2     4.5     4  
+## 10 JV&#39;s Me… Carne …   4      4.1  6.25         NA      2.5   1.5     2  
+## # ... with 375 more rows, and 2 more variables: overall &lt;dbl&gt;, Beans &lt;chr&gt;</pre>
+
+</article></slide><slide class=""><hgroup><h2>Rename Variables</h2></hgroup><article  id="rename-variables">
+
+<pre class = 'prettyprint lang-r'>clean_burrito &lt;- clean_burrito %&gt;%
+  rename(
+    location = Location,
+    burrito = Burrito,
+    yelp_rating = Yelp,
+    google_rating = Google,
+    cost = Cost,
+    mass = `Mass (g)`,
+    tortilla = Tortilla,
+    meat = Meat,
+    synergy = Synergy,
+    overall_rating = overall,
+    beans = Beans
+  )</pre>
+
+</article></slide><slide class=""><hgroup><h2>Rename Variables</h2></hgroup><article  id="rename-variables-1">
+
+<pre class = 'prettyprint lang-r'>clean_burrito</pre>
+
+<pre >## # A tibble: 385 x 11
+##    location burrito yelp_rating google_rating  cost  mass tortilla  meat
+##    &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt; &lt;dbl&gt;
+##  1 Donato&#39;… Califo…         3.5           4.2  6.49    NA      3     3  
+##  2 Oscar&#39;s… Califo…         3.5           3.3  5.45    NA      2     2.5
+##  3 Oscar&#39;s… Carnit…        NA            NA    4.85    NA      3     2.5
+##  4 Oscar&#39;s… Carne …        NA            NA    5.25    NA      3     3.5
+##  5 Pollos … Califo…         4             3.8  6.59    NA      4     4  
+##  6 Pollos … combo …        NA            NA    6.99    NA      3     5  
+##  7 Nico&#39;s … Califo…         3             2.9  7.19    NA      2     3  
+##  8 Nico&#39;s … Carnit…        NA            NA    6.99    NA      2.5   3  
+##  9 Los Pri… Monste…         3             3.7  9.25    NA      2     4.5
+## 10 JV&#39;s Me… Carne …         4             4.1  6.25    NA      2.5   1.5
+## # ... with 375 more rows, and 3 more variables: synergy &lt;dbl&gt;,
+## #   overall_rating &lt;dbl&gt;, beans &lt;chr&gt;</pre>
+
+</article></slide><slide class=""><hgroup><h2>Quiz 1</h2></hgroup><article  id="quiz-1">
+
+<ul class = 'build'>
+<li>What does <code>select</code> do?
+
+<ul>
+<li><code>select</code>s variables (columns)</li>
+</ul></li>
+<li>What does <code>rename</code> do?
+
+<ul>
+<li>This should be obvious</li>
+</ul></li>
+<li>What does <code>%&gt;%</code> do?
+
+<ul>
+<li>The &#39;pipe&#39; operator</li>
+<li>From the package <code>magrittr</code>. Comes with <code>dplyr</code></li>
+<li>Improves readability of code
+
+<ul>
+<li><code>x %&gt;% h %&gt;% g %&gt;% f</code> instead of <code>f(g(h(x)))</code></li>
+<li>&quot;Take x. Apply the function h. Then g. Then f.&quot;</li>
+</ul></li>
+<li>First argument is always the data</li>
+<li>Allows for easy chaining of operations on data frame</li>
+</ul></li>
+</ul></article></slide>
 
 
   <slide class="backdrop"></slide>
