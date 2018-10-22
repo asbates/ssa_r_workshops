@@ -1,0 +1,41 @@
+---
+title: "An Introduction to the R Ecosystem"
+subtitle: "Or, the R Introduction You Wish You'd Gotten in Class"
+author: "Andrew Bates"
+date: "10/22/2018"
+output: 
+  ioslides_presentation:
+    logo: logo.jpeg
+---
+
+## What This Workshop Is Not
+
+> - The typical introduction to a programming language
+> - This is a list of the basic R data types
+> - This is how to create a vector ...
+> - This is how to create a matrix ...
+> - ...
+
+
+## What This Workshop Is 
+
+> - A simple data analysis using
+> - R: the R language itself
+> - RStudio: an IDE for the R language
+> - R Markdown: a tool that makes mixing analysis and text easy
+
+
+## Why?
+
+>  - Being able to create a vector doesn't mean you can make a plot
+>  - Being able to create a matrix doesn't mean you can fit a model
+
+> - This workshop is more practical because
+>     - You need to be able to take what you learn here and actually apply it
+>     - You need to write up your analysis for it to be useful
+>     - Using R with RStudio and R Markdown makes this seamless
+
+
+
+
+
