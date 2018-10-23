@@ -44,7 +44,7 @@ output:
 > - Go to my GitHub repository that has the files we will need:
 >     - [https://github.com/asbates/ssa_r_workshops](https://github.com/asbates/ssa_r_workshops) 
 > - Download the data in `fall_18/data/candy-data.csv`
-> - Download the R Markdown file `fall_18/r-intro/analysis.Rmd`
+> - Download the R Markdown file `fall_18/r-intro/candy-showdown.Rmd`
 > - Save both files in your RStudio project
 
 

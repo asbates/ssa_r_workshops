@@ -1,0 +1,105 @@
+---
+title: "The Halloween Candy Showdown"
+author: "Andrew Bates"
+date: "10/22/2018"
+output: html_document
+---
+
+<!-- NOTE: before you read on, click the Knit button at the top of this panel, or use the keyboard shortcut Crtr/Command + Shift + K -->
+
+### Welcome
+
+Welcome to the Halloween Candy Showdown! In this workshop, we will be analying data on Halloween candy to determine what factors influence the popularity of a candy. Along the way, we will be learning a bit about R, RStudio, and R Markdown. Most of what we will learn about RStudio and R Markdown will be spoken, so I encourage you to make notes as we go along.
+
+The necessary files are located at [my GitHub](https://github.com/asbates/ssa_r_workshops) repository (folder) for SSA workshops. The data is based on an experiment done by [FiveThirtyEight](https://fivethirtyeight.com/features/the-ultimate-halloween-candy-power-ranking/). I obtained the data from the Kagge Datasets page [here](https://www.kaggle.com/fivethirtyeight/the-ultimate-halloween-candy-power-ranking/home).
+
+
+
+### What's with This Rstudio & R Markdown Business?
+
+RStudio is an integrated development environment (IDE) for R. It provides a lot of useful features that make your R programming life easier. For example, in  RStudio you have four different sections: a place for your code files, a place for the R console, a place for files/plots/packages/help, and a place for your environment (what data, variables, functions you have defined) all in one window. This keeps your workspace cleaner and more organized than if you were just using R. There are a ton of other features as well, some of which we will cover in this workshop.
+
+R Markdown is a tool that allows you to seamlessly mix your text and analysis in a single document. This makes it easier to report your analysis, allows for better reproducability, and makes your grader's life easier (which benefits you in turn). With R Markdown you can produce html, pdf (need LaTeX), and Word documents, html, pdf, and PowerPoint presentations, and even websites. Moreover, changing from say, a pdf to a Word document can be done with a single line of code!
+
+Additionally, RStudio and R Markdown work even better when used together. RStudio provides tools that handle the backend of R Markdown, simplifying the process.
+
+
+### Load the Data
+
+To load the data, we will be using two R packages. A package is a collection of R code that solves a particular problem. Basically, somebody wants to solve a new problem or improve the existing way of doing something, works really hard, and then we benefit from it. R ships with a few packages already installed. However, we will use an additional package called `here`. It's not essential to this analysis, but it will make certain things easier and allows us to see how to install a package.
+
+The `here` package simplifies working with file paths. The function `here` finds the "root" of your directory so that file paths can be specified relative to the root. If this doesn't make sense, dont' worry. It will in time. Essentially, you don't have to remember the full file path, e.g. `/Users/myname/Desktop/blah/blah/blah/cand-data.csv` which is cumbersome and can hinder reproducability.  To install the package run the following code.
+
+<!-- NOTE: you can click the green arrow on the right to run the code or type it into the R console. Either way, just run it once and leave the eval = FALSE alone -->
+
+```{r install-here, eval = FALSE}
+install.packages("here")
+```
+
+After installing the package, we need load it. That is, tell R that we want to use it. We need to load most packages every time we want to use them because we don't need/want to use every package we have in every analysis[^1]. To load the package, use
+
+```{r load-here}
+library(here)
+```
+
+See what `here` does? It tells you where your root directory is.
+
+OK. Now we can load our data. Remember, you should have the files `candy-data.csv` and `candy-showdown.Rmd` in an RStudio project. Trust me, this just makes things easier. Our data is in a .csv file so we will use the function `read.csv`:
+
+
+<!-- Note: you may not need "fall_18". It depends on how you have your project folders names.  -->
+```{r load-data}
+candy <- read.csv(here("fall_18", "data", "candy-data.csv"),
+                  stringsAsFactors = FALSE)
+```
+
+If we didn't use `here`, the code would have read
+
+```{r load-data-bad-path, eval = FALSE}
+candy <- read.csv("/Users/andrewbates/Desktop/Projects/ssa_r_workshops/fall_18/data/candy-data.csv", stringsAsFactors = FALSE)
+```
+
+and you would have had to change the file path to fit your computer. Hopefully you can now see why `here` is useful
+
+
+### A First Look at the Data
+
+Once loaded, we can look at the first few rows of the data by using
+
+```{r head-candy}
+head(candy)
+```
+
+The first column, `competitorname` gives the name of the candy. The next few indicate whether it has chocolate, nougat, etc. A 1 means it does, a 0 means it doesn't. We can get a full description of each variable (called a data dictionary) [here](https://www.kaggle.com/fivethirtyeight/the-ultimate-halloween-candy-power-ranking/home)
+
+This gives us an idea of what the data looks like. For more information, like what type each variable is (character, integer, etc.), we can use
+
+```{r str-candy}
+str(candy)
+```
+
+This may look a bit intimidating at first, especially if your data is complex, but you will get used to it. It's very helpful in the early stages of an analysis when you're cleaning the data. Luckily, this data set doesn't need much cleaning.
+
+To get a summary of the data, we can use
+
+```{r summary}
+summary(candy)
+```
+
+If we want to look at a specific variable, we can use `$`:
+
+```{r summary-winpercent}
+summary(candy$winpercent)
+```
+
+Note that the ouput of `summary(candy$winpercent)` is slightly different than `summary(candy)`. This is because our data is stored in what's called a **data.frame**. But when we select a specific variable of a data frame, that variable is converted to a **vector**. The `summary` function behaves differently depending on the data type. This because R supports object oriented programming where functions have different methods depending on the type.
+
+
+
+
+
+
+
+
+
+[^1]: In the future, load all the packages your analysis depends on at the beginning of your code. This makes it easier for other people to run your analysis
