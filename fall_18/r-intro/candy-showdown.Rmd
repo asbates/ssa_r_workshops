@@ -9,7 +9,9 @@ output: html_document
 
 ### Welcome
 
-Welcome to the Halloween Candy Showdown! In this workshop, we will be analying data on Halloween candy to determine what factors influence the popularity of a candy. Along the way, we will be learning a bit about R, RStudio, and R Markdown. Most of what we will learn about RStudio and R Markdown will be spoken, so I encourage you to make notes as we go along.
+Welcome to the Halloween Candy Showdown! In this workshop, we will be analying data on Halloween candy to determine what factors influence the popularity of a candy. Along the way, we will be learning a bit about R, RStudio, and R Markdown. Most of what we will learn about RStudio and R Markdown will be spoken, so I encourage you to make notes as we go along. 
+
+The first two sections won't be terribly exciting. We will go over these quickly and you can just run the code without reading much of the text. Actually, you can just ignore the text because I will be explaining everything. I put the text there so you can reference it later. If I just gave you the code, you would probably forget how everything works the next time you look at it.
 
 The necessary files are located at [my GitHub](https://github.com/asbates/ssa_r_workshops) repository (folder) for SSA workshops. The data is based on an experiment done by [FiveThirtyEight](https://fivethirtyeight.com/features/the-ultimate-halloween-candy-power-ranking/). I obtained the data from the Kagge Datasets page [here](https://www.kaggle.com/fivethirtyeight/the-ultimate-halloween-candy-power-ranking/home).
 
@@ -80,6 +82,13 @@ str(candy)
 
 This may look a bit intimidating at first, especially if your data is complex, but you will get used to it. It's very helpful in the early stages of an analysis when you're cleaning the data. Luckily, this data set doesn't need much cleaning.
 
+In we forget the `names` of the variables, we can use
+
+```{r candy-names}
+names(candy)
+```
+
+
 To get a summary of the data, we can use
 
 ```{r summary}
@@ -92,9 +101,89 @@ If we want to look at a specific variable, we can use `$`:
 summary(candy$winpercent)
 ```
 
-Note that the ouput of `summary(candy$winpercent)` is slightly different than `summary(candy)`. This is because our data is stored in what's called a **data.frame**. But when we select a specific variable of a data frame, that variable is converted to a **vector**. The `summary` function behaves differently depending on the data type. This because R supports object oriented programming where functions have different methods depending on the type.
+Note that the ouput of `summary(candy$winpercent)` is slightly different than `summary(candy)`. This is because our data is stored in what's called a **data.frame**. But when we select a specific variable of a data frame, that variable is converted to a **vector**. The `summary` function behaves differently depending on the data type. This because R supports object oriented programming where functions have different methods depending on the type of input.
 
 
+### Some Plots
+
+You've likely been bored until now. You should be because we haven't done anything exciting yet. So let's do something more fun: plots!
+
+The variable we're really interested in is `winpercent` so let's plot that first. We'll start with a `hist`ogram:
+
+```{r win-perc-hist}
+hist(candy$winpercent)
+```
+
+This plot is a bit rough so let's clean it up. We'll start by adding an x label, title, and changing the number of bins.
+
+```{r better-win-hist}
+hist(candy$winpercent,
+     xlab = "Win Percentage",
+     main = "Histogram of Win Percentage",
+     breaks = 60)
+```
+
+Woops! That's too many bins. We'll use a smaller number in the next plot. Let's also overlay a density plot. We can do this as follows.
+
+```{r win-hist-no-density}
+hist(candy$winpercent,
+     xlab = "Win Percentage",
+     main = "Histogram of Win Percentage",
+     breaks = 30)
+win_dens <- density(candy$winpercent)
+lines(win_dens, col = "blue")
+```
+
+Wait, where's the density plot? Look at the y axis. We plotted a histogram of counts (or frequencies) but what we actually want probabilities. Let's figure out how to do that by using the help function:
+
+```{r help-hist, eval = FALSE}
+?hist
+# or
+help(hist)
+```
+
+By default, the argument `freq` is set to `TRUE`. This means R will automatically plot a histogram of counts unless we tell it otherwise. Let's tell it otherwise.
+
+```{r win-hist-density}
+hist(candy$winpercent,
+     xlab = "Win Percentage",
+     main = "Histogram of Win Percentage",
+     breaks = 30,
+     freq = FALSE)
+win_dens <- density(candy$winpercent)
+lines(win_dens, col = "blue")
+```
+
+
+Now we'll look at how win percentage varies across some of the categorical variables.
+
+```{r boxplot-bad}
+boxplot(winpercent ~ chocolate,
+        data = candy)
+boxplot(winpercent ~ caramel,
+        data = candy)
+```
+
+Again, not very helpful. The problem is that the variables we know to be categorical are being treated as numerical. In R, categorical variables are called **factors**. We need to convert our variables to factors. We can do this by typing `factor(chocolate)` but because of the way the variables are encoded, the resulting plot will look the same. So we will create new variables with specify "yes" for 1 and "no" for 0 and add them to our data set. We will also change the labels to make it clear what we are looking at.
+
+
+<!-- NOTE: this is so you can see what I mean by factor(chocolate) -->
+<!-- KNITR NOTE: change eval to TRUE, then echo = TRUE, then both and see what happens -->
+```{r boxplot-dont-do, eval = FALSE, echo = FALSE}
+boxplot(winpercent ~ factor(chocolate),
+        data = candy)
+```
+
+
+```{r boxplot-good}
+candy$choc_factor <- ifelse(candy$chocolate == 1, "yes_choc", "no_choc")
+candy$caram_factor <- ifelse(candy$caramel == 1, "yes_choc", "no_choc")
+
+boxplot(winpercent ~ choc_factor,
+        data = candy)
+boxplot(winpercent ~ caram_factor,
+        data = candy)
+```
 
 
 
