@@ -1,8 +1,36 @@
 ---
-title: "Untitled"
+title: "The Halloween Candy Showdown"
 author: "Andrew Bates"
 date: "10/22/2018"
 output: html_document
 ---
+
+<!-- NOTE: before you read on, click the Knit button at the top of this panel, or use the keyboard shortcut Crtr/Command + Shift + K -->
+
+### Welcome
+
+Welcome to the Halloween Candy Showdown! In this workshop, we will be analying data on Halloween candy to determine what factors influence the popularity of a candy. Along the way, we will be learning a bit about R, RStudio, and R Markdown. Most of what we will learn about RStudio and R Markdown will be spoken, so I encourage you to make notes as we go along.
+
+The necessary files are located at [my GitHub](https://github.com/asbates/ssa_r_workshops) repository (folder) for SSA workshops. The data is based on an experiment done by [FiveThirtyEight](https://fivethirtyeight.com/features/the-ultimate-halloween-candy-power-ranking/). I obtained the data from the Kagge Datasets page [here](https://www.kaggle.com/fivethirtyeight/the-ultimate-halloween-candy-power-ranking/home).
+
+
+
+### What's with This Rstudio & R Markdown Business?
+
+RStudio is an integrated development environment (IDE) for R. It provides a lot of useful features that make your R programming life easier. For example, in  RStudio you have four different sections: a place for your code files, a place for the R console, a place for files/plots/packages/help, and a place for your environment (what data, variables, functions you have defined) all in one window. This keeps your workspace cleaner and more organized than if you were just using R. There are a ton of other features as well, some of which we will cover in this workshop.
+
+R Markdown is a tool that allows you to seamlessly mix your text and analysis in a single document. This makes it easier to report your analysis, allows for better reproducability, and makes your grader's life easier (which benefits you in turn). With R Markdown you can produce html, pdf (need LaTeX), and Word documents, html, pdf, and PowerPoint presentations, and even websites. Moreover, changing from say, a pdf to a Word document can be done with a single line of code!
+
+Additionally, RStudio and R Markdown work even better when used together. RStudio provides tools that handle the backend of R Markdown, simplifying the process.
+
+
+### 
+
+
+
+
+
+
+
 
 
