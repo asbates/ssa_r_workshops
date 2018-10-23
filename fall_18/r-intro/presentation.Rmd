@@ -36,6 +36,8 @@ output:
 >     - Using R with RStudio and R Markdown makes this seamless
 
 
+## Let's Get Started
 
+- In Rstudio: file -> New Project 
 
 
