@@ -72,7 +72,7 @@ Once loaded, we can look at the first few rows of the data by using
 head(candy)
 ```
 
-The first column, `competitorname` gives the name of the candy. The next few indicate whether it has chocolate, nougat, etc. A 1 means it does, a 0 means it doesn't. We can get a full description of each variable (called a data dictionary) [here](https://www.kaggle.com/fivethirtyeight/the-ultimate-halloween-candy-power-ranking/home)
+The first column, `competitorname` gives the name of the candy. The next few indicate whether it has chocolate, nougat, etc. A 1 means it does, a 0 means it doesn't. We can get a full description of each variable (called a data dictionary) [here](https://www.kaggle.com/fivethirtyeight/the-ultimate-halloween-candy-power-ranking/home).
 
 This gives us an idea of what the data looks like. For more information, like what type each variable is (character, integer, etc.), we can use
 
@@ -164,31 +164,76 @@ boxplot(winpercent ~ caramel,
         data = candy)
 ```
 
-Again, not very helpful. The problem is that the variables we know to be categorical are being treated as numerical. In R, categorical variables are called **factors**. We need to convert our variables to factors. We can do this by typing `factor(chocolate)` but because of the way the variables are encoded, the resulting plot will look the same. So we will create new variables with specify "yes" for 1 and "no" for 0 and add them to our data set. We will also change the labels to make it clear what we are looking at.
-
-
-<!-- NOTE: this is so you can see what I mean by factor(chocolate) -->
-<!-- KNITR NOTE: change eval to TRUE, then echo = TRUE, then both and see what happens -->
-```{r boxplot-dont-do, eval = FALSE, echo = FALSE}
-boxplot(winpercent ~ factor(chocolate),
-        data = candy)
-```
-
+Again, the default values `boxplot` are fine if we are just looking at the plots interactively but if we want to show someone else, we should clean  them up a bit.
 
 ```{r boxplot-good}
-candy$choc_factor <- ifelse(candy$chocolate == 1, "yes_choc", "no_choc")
-candy$caram_factor <- ifelse(candy$caramel == 1, "yes_choc", "no_choc")
 
-boxplot(winpercent ~ choc_factor,
-        data = candy)
-boxplot(winpercent ~ caram_factor,
-        data = candy)
+
+boxplot(winpercent ~ chocolate,
+        data = candy,
+        names = c("no chocolate", "yes"),
+        main = "Win Percentage Grouped By Whether Candy Has Chocolate")
+boxplot(winpercent ~ caramel,
+        data = candy,
+        names = c("no caramel", "yes"),
+        main = "Win Percentage Grouped By Whether Candy Has Caramel")
 ```
 
 
+These plots are better but what if we wanted to save some space and plot them side-by-side? We can use the `par` function to change some of the graphical parameters. We'll set the `mfrow` parameter to specify that we want 1 row and 2 columns. After we make the plots, we will undo this by resetting the `mfrow` parameter.
+
+```{r boxplot-side-side }
+par(mfrow = c(1, 2))
+boxplot(winpercent ~ chocolate,
+        data = candy,
+        names = c("no chocolate", "yes"),
+        main = "Win Percentage Grouped By Whether Candy Has Chocolate")
+boxplot(winpercent ~ caramel,
+        data = candy,
+        names = c("no caramel", "yes"),
+        main = "Win Percentage Grouped By Whether Candy Has Caramel")
+par(mfrow = c(1,1))
+```
+
+Great, now they are side-by-side and easier to compare. But the title is useless. We can fix this by changing some of the options in our code chunk. What's a code chunk? The sections in the R Markdown file surround by the three backticks  ` ``` `. We will tell R Markdown that we want a figure caption by using `fig.cap = "your figure caption here"`[^2]. We will also specify some additional arguments to our plot function. Let's give them some color and have the box width be proprotional to the number of observations in each category.
+
+```{r boxplot-final, fig.cap = "Win percentage grouped by whether the candy has chocolate or caramel."}
+par(mfrow = c(1, 2))
+boxplot(winpercent ~ chocolate,
+        data = candy,
+        names = c("no chocolate", "yes"),
+        col = "cyan",
+        varwidth = TRUE)
+boxplot(winpercent ~ caramel,
+        data = candy,
+        names = c("no caramel", "yes"),
+        col = "cyan",
+        varwidth = TRUE)
+```
+
+much better. discussion on plots? how did i know how to add these extra features? i looked at the help file
+
+```{r help-boxplot, eval = FALSE}
+?boxplot
+```
 
 
+sidebar: what's with the `~`?
+
+Let's look at one last type of plot: a scatter plot. Besides win percent, the only continuous variables are sugar and price percent. We'll look at sugar percent.
+
+```{r sugar-scatter}
+plot(candy$sugarpercent, candy$winpercent,
+     xlab = "Sugar Percentage",
+     ylab = "Win Percentage",
+     main = "Win Percentage vs. Sugar Percentage",
+     pch = 16) # dots instead of circles
+```
 
 
 
 [^1]: In the future, load all the packages your analysis depends on at the beginning of your code. This makes it easier for other people to run your analysis
+[^2]: For more ways to customize see the [knitr chunk options](https://yihui.name/knitr/options/). The `knitr` R package handles the backend of the .Rmd conversion.
+
+
+
