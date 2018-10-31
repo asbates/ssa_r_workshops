@@ -100,14 +100,21 @@
 <slide class=""><hgroup><h2>This Workshop</h2></hgroup><article  id="this-workshop">
 
 <ul class = 'build'>
-<li>Core functions of <code>dplyr</code></li>
-<li>Other useful functions as time permits</li>
+<li>Core functions of the <code>dplyr</code> package</li>
+<li><code>dplyr</code> is part of the <a href='https://www.tidyverse.org' title=''>tidyverse</a>:
+
+<ul>
+<li>&quot;The tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.&quot;</li>
+</ul></li>
+<li>&quot;<a href='https://dplyr.tidyverse.org' title=''>dplyr</a> is a grammar of data manipulation, providing a consistent set of verbs that help you solve the most common data manipulation challenges&quot;</li>
+<li>You <strong>will</strong> need to do data manipulation and cleaning</li>
+<li><code>dplyr</code> makes this easy and fun</li>
 </ul>
 
 </article></slide><slide class=""><hgroup><h2>The Data</h2></hgroup><article  id="the-data">
 
 <ul class = 'build'>
-<li>Review of burritos in San Diego</li>
+<li>Reviews of burritos in San Diego</li>
 <li>Project of <a href='https://srcole.github.io/100burritos/' title=''>Scott Cole</a>, a neuroscience student at UCSD</li>
 <li>Find it
 
@@ -119,25 +126,28 @@
 
 </article></slide><slide class=""><hgroup><h2>Setup</h2></hgroup><article  id="setup">
 
-<ul>
-<li>Download the burrito data
+<ol>
+<li>Go to <a href='https://github.com/asbates/ssa_r_workshops' title=''>https://github.com/asbates/ssa_r_workshops</a></li>
+<li>Click the green &quot;Clone or download&quot; button</li>
+<li>Select &quot;Download ZIP&quot; (unless you&#39;re familiar with Git)</li>
+<li>Unzip and click on <code>ssa_r_workshops.Rproj</code></li>
+<li>Install (if needed) and load the packages we will use</li>
+<li>Read in the data</li>
+</ol>
 
-<ul>
-<li>Make sure you know where it is</li>
-</ul></li>
-<li>Run the following code:</li>
-</ul>
-
-<pre class = 'prettyprint lang-r'>install.packages(&quot;dplyr&quot;, &quot;readr&quot;) # readr is for reading in data
+<pre class = 'prettyprint lang-r'>install.packages(&quot;dplyr&quot;, &quot;readr&quot;, &quot;here&quot;) 
 library(dplyr)
 library(readr)
-dirty_burrito &lt;- read_csv(&quot;path/to/file/burritos_01022018.csv&quot;)</pre>
+library(here)
+dirty_burrito &lt;- read_csv(here(&quot;fall_18&quot;, &quot;data&quot;, &quot;burritos_01022018.csv&quot;))
+# or, if you don&#39;t want to use the here package
+#dirty_burrito &lt;- read_csv(&quot;path/to/file/burritos_01022018.csv&quot;)</pre>
 
 </article></slide><slide class=""><hgroup><h2>First Look</h2></hgroup><article  id="first-look">
 
-<pre class = 'prettyprint lang-r'>dirty_burrito[, 1:10]</pre>
+<pre class = 'prettyprint lang-r'>dirty_burrito</pre>
 
-<pre >## # A tibble: 385 x 10
+<pre >## # A tibble: 385 x 66
 ##    Location Burrito Date  Neighborhood Address URL    Yelp Google Chips
 ##    &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;
 ##  1 Donato&#39;… Califo… 1/18… Miramar      6780 M… http…   3.5    4.2 &lt;NA&gt; 
@@ -150,7 +160,20 @@ dirty_burrito &lt;- read_csv(&quot;path/to/file/burritos_01022018.csv&quot;)</pr
 ##  8 Nico&#39;s … Carnit… 1/30… &lt;NA&gt;         &lt;NA&gt;    &lt;NA&gt;   NA     NA   &lt;NA&gt; 
 ##  9 Los Pri… Monste… 2/1/… UTC          7770 R… http…   3      3.7 x    
 ## 10 JV&#39;s Me… Carne … 2/6/… Morena       1112 M… http…   4      4.1 &lt;NA&gt; 
-## # ... with 375 more rows, and 1 more variable: Cost &lt;dbl&gt;</pre>
+## # ... with 375 more rows, and 57 more variables: Cost &lt;dbl&gt;, Hunger &lt;dbl&gt;,
+## #   `Mass (g)` &lt;int&gt;, `Density (g/mL)` &lt;dbl&gt;, Length &lt;dbl&gt;, Circum &lt;dbl&gt;,
+## #   Volume &lt;dbl&gt;, Tortilla &lt;dbl&gt;, Temp &lt;dbl&gt;, Meat &lt;dbl&gt;, Fillings &lt;dbl&gt;,
+## #   `Meat:filling` &lt;dbl&gt;, Uniformity &lt;dbl&gt;, Salsa &lt;dbl&gt;, Synergy &lt;dbl&gt;,
+## #   Wrap &lt;dbl&gt;, overall &lt;dbl&gt;, Rec &lt;chr&gt;, Reviewer &lt;chr&gt;, Notes &lt;chr&gt;,
+## #   Unreliable &lt;chr&gt;, NonSD &lt;chr&gt;, Beef &lt;chr&gt;, Pico &lt;chr&gt;, Guac &lt;chr&gt;,
+## #   Cheese &lt;chr&gt;, Fries &lt;chr&gt;, `Sour cream` &lt;chr&gt;, Pork &lt;chr&gt;,
+## #   Chicken &lt;chr&gt;, Shrimp &lt;chr&gt;, Fish &lt;chr&gt;, Rice &lt;chr&gt;, Beans &lt;chr&gt;,
+## #   Lettuce &lt;chr&gt;, Tomato &lt;chr&gt;, `Bell peper` &lt;chr&gt;, Carrots &lt;chr&gt;,
+## #   Cabbage &lt;chr&gt;, Sauce &lt;chr&gt;, Salsa_1 &lt;chr&gt;, Cilantro &lt;chr&gt;,
+## #   Onion &lt;chr&gt;, Taquito &lt;chr&gt;, Pineapple &lt;chr&gt;, Ham &lt;chr&gt;, `Chile
+## #   relleno` &lt;chr&gt;, Nopales &lt;chr&gt;, Lobster &lt;chr&gt;, Queso &lt;chr&gt;, Egg &lt;chr&gt;,
+## #   Mushroom &lt;chr&gt;, Bacon &lt;chr&gt;, Sushi &lt;chr&gt;, Avocado &lt;chr&gt;, Corn &lt;chr&gt;,
+## #   Zucchini &lt;chr&gt;</pre>
 
 </article></slide><slide class=""><hgroup><h2>First Look</h2></hgroup><article  id="first-look-1">
 
@@ -186,8 +209,9 @@ dirty_burrito &lt;- read_csv(&quot;path/to/file/burritos_01022018.csv&quot;)</pr
 <li>Inconsistent naming scheme (capitalization)</li>
 </ul></li>
 <li>There are some <code>NA</code> values (not necessarily a problem)</li>
-<li><code>Chips</code> encoding is not so obvious</li>
+<li><code>Chips</code> encoding is not so obvious (does <code>x</code> mean yes?)</li>
 <li>What&#39;s the difference between <code>Tortilla</code> and <code>Wrap</code>?</li>
+<li>The last two can probably be figured out with a data dictionary</li>
 </ul>
 
 </article></slide><slide class=""><hgroup><h2>Fixing The Issues</h2></hgroup><article  id="fixing-the-issues">
@@ -215,6 +239,8 @@ dirty_burrito &lt;- read_csv(&quot;path/to/file/burritos_01022018.csv&quot;)</pr
          Synergy,
          overall,
          Beans)</pre>
+
+<p>Note the use of backticks <code>``</code> to handle the space in Mass</p>
 
 </article></slide><slide class=""><hgroup><h2>Selecting Variables of Interest</h2></hgroup><article  id="selecting-variables-of-interest-1">
 
@@ -251,6 +277,8 @@ dirty_burrito &lt;- read_csv(&quot;path/to/file/burritos_01022018.csv&quot;)</pr
     overall_rating = overall,
     beans = Beans
   )</pre>
+
+<p>We rename using <code>new_name = old_name</code></p>
 
 </article></slide><slide class=""><hgroup><h2>Rename Variables</h2></hgroup><article  id="rename-variables-1">
 

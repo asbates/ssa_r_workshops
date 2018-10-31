@@ -8,12 +8,16 @@ output: ioslides_presentation
 
 ## This Workshop
 
-> - Core functions of  `dplyr`
-> - Other useful functions as time permits
+> - Core functions of  the `dplyr` package
+> - `dplyr` is part of the [tidyverse](https://www.tidyverse.org):
+>     - "The tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures."
+> - "[dplyr](https://dplyr.tidyverse.org) is a grammar of data manipulation, providing a consistent set of verbs that help you solve the most common data manipulation challenges"
+> - You **will** need to do data manipulation and cleaning
+> - `dplyr` makes this easy and fun
 
 ## The Data 
 
-> - Review of burritos in San Diego
+> - Reviews of burritos in San Diego
 > - Project of [Scott Cole](https://srcole.github.io/100burritos/), a neuroscience student at UCSD
 > - Find it
 >     - on his [website](https://github.com/asbates/ssa_r_workshops/tree/master/fall_18/data)
@@ -22,15 +26,21 @@ output: ioslides_presentation
 
 ## Setup
 
- - Download the burrito data
-     - Make sure you know where it is
- - Run the following code:
+1. Go to https://github.com/asbates/ssa_r_workshops
+2. Click the green "Clone or download" button
+3. Select "Download ZIP" (unless you're familiar with Git)
+4. Unzip and click on `ssa_r_workshops.Rproj` 
+5. Install (if needed) and load the packages we will use
+6. Read in the data
 
 ```{r setup_shown, eval = FALSE}
-install.packages("dplyr", "readr") # readr is for reading in data
+install.packages("dplyr", "readr", "here") 
 library(dplyr)
 library(readr)
-dirty_burrito <- read_csv("path/to/file/burritos_01022018.csv")
+library(here)
+dirty_burrito <- read_csv(here("fall_18", "data", "burritos_01022018.csv"))
+# or, if you don't want to use the here package
+#dirty_burrito <- read_csv("path/to/file/burritos_01022018.csv")
 ```
      
 ```{r setup_hidden, echo = FALSE, message = FALSE, warning = FALSE}
@@ -45,7 +55,7 @@ dirty_burrito <- read_csv(here("fall_18", "data", "burritos_01022018.csv"))
 ## First Look
 
 ```{r first_look_print}
-dirty_burrito[, 1:10]
+dirty_burrito
 ```
 
 ## First Look
@@ -62,8 +72,9 @@ names(dirty_burrito)
 >     - `Bell peper` is spelled wrong
 >     - Inconsistent naming scheme (capitalization)
 > - There are some `NA` values (not necessarily a problem)
-> - `Chips` encoding is not so obvious
+> - `Chips` encoding is not so obvious (does `x` mean yes?)
 > - What's the difference between `Tortilla` and `Wrap`?
+> - The last two can probably be figured out with a data dictionary
 
 ## Fixing The Issues
 
@@ -87,6 +98,10 @@ clean_burrito <- dirty_burrito %>%
          overall,
          Beans)
 ```
+
+
+Note the use of backticks ` `` ` to handle the space in Mass
+
 
 ## Selecting Variables of Interest
 ```{r clean_first_pass}
@@ -112,6 +127,9 @@ clean_burrito <- clean_burrito %>%
     beans = Beans
   )
 ```
+
+We rename using `new_name = old_name`
+
 
 ## Rename Variables
 
