@@ -82,7 +82,7 @@ str(candy)
 
 This may look a bit intimidating at first, especially if your data is complex, but you will get used to it. It's very helpful in the early stages of an analysis when you're cleaning the data. Luckily, this data set doesn't need much cleaning.
 
-In we forget the `names` of the variables, we can use
+If we forget the `names` of the variables, we can use
 
 ```{r candy-names}
 names(candy)
@@ -215,7 +215,7 @@ This looks a lot better than our first go. But how did I know how to customize t
 
 Let's take an aside. What's with the `~` in the boxplot function? R has a special syntax called a **formula** that works kind of like = in a math formula. In the chocolate boxplot, the first argument was `winpercent ~ chocolate`. This tells the `boxplot` function that we want a boxplot of win percentage vs. chocolate. Since chocolate is categorical, `boxplot` knows that we want a separate boxplot for each category. Usually, formulas are used in modeling functions. If we gave the formula `y ~ x1 + x2` to a function that fits a model, it would be the same as the math notation $y = x1 + x2$. We will see this in action shortly.
 
-Aside over. Let's look at one last type of plot: a scatter plot. Besides win percent, the only continuous variables are sugar and price percent. We'll look at sugar percent. We can do this using the `plot` functions. This is a generic plotting function. We'll use it here by specifying an x and a y. We'll put sugar percent on the x axis with win percent on the y axis.
+Aside over. Let's look at one last type of plot: a scatter plot. Besides win percent, the only continuous variables are sugar and price percent. We'll look at sugar percent. We can do this using the `plot` function. This is a generic plotting function. We'll use it here by specifying an x and a y. We'll put sugar percent on the x axis with win percent on the y axis.
 
 ```{r sugar-scatter}
 plot(candy$sugarpercent, candy$winpercent,
@@ -232,10 +232,6 @@ This isn't a very informative plot, but at least now we know how to make a scatt
 Now that we have figured out how to make some plots, let's fit a model. We'll keep it simple by fitting a linear regression model. There are a TON of other models in R. A lot of times there are packages dedicated solely to fitting certain types of models or classes of models. Actually, that's one of the reasons why R is so great.
 
 To fit a standard regression model, we can use the function `lm` (for linear model). Just like in `boxplot`, we use a formula to specify our model. We'll use a few categorical variables along with the continuous variables. The response (or dependent variable, or y) will be winpercent.
-
-```{r}
-names(candy)
-```
 
 
 ```{r fit-model}

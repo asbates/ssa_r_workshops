@@ -196,7 +196,7 @@ $(document).ready(function () {
 ##  $ pricepercent    : num  0.86 0.511 0.116 0.511 0.511 ...
 ##  $ winpercent      : num  67 67.6 32.3 46.1 52.3 ...</code></pre>
 <p>This may look a bit intimidating at first, especially if your data is complex, but you will get used to it. It’s very helpful in the early stages of an analysis when you’re cleaning the data. Luckily, this data set doesn’t need much cleaning.</p>
-<p>In we forget the <code>names</code> of the variables, we can use</p>
+<p>If we forget the <code>names</code> of the variables, we can use</p>
 <pre class="r"><code>names(candy)</code></pre>
 <pre><code>##  [1] &quot;competitorname&quot;   &quot;chocolate&quot;        &quot;fruity&quot;          
 ##  [4] &quot;caramel&quot;          &quot;peanutyalmondy&quot;   &quot;nougat&quot;          
@@ -322,7 +322,7 @@ Win percentage grouped by whether the candy has chocolate or caramel.
 </div>
 <p>This looks a lot better than our first go. But how did I know how to customize the plots? Do I have all the arguments memorized? Of course not! I used the help file: <code>?boxplot</code>. Generally, this is how your R sessions will go. You don’t need to memorize every function along with all it’s arguments. Eventually, you will remember a lot of the functions but you’ll still need to look up the options if the defaults aren’t cutting it. You’ll remember that to make a boxplot you use the <code>boxplot</code> function, use the default settings as a first pass, then modify the arguments to suit your needs. And you’ll probably need to use the help file to remember what all the arguments are. At first, it will probably take a while just to get something simple done. In time it gets faster and you won’t need to consult the help file for functions that you use a lot.</p>
 <p>Let’s take an aside. What’s with the <code>~</code> in the boxplot function? R has a special syntax called a <strong>formula</strong> that works kind of like = in a math formula. In the chocolate boxplot, the first argument was <code>winpercent ~ chocolate</code>. This tells the <code>boxplot</code> function that we want a boxplot of win percentage vs. chocolate. Since chocolate is categorical, <code>boxplot</code> knows that we want a separate boxplot for each category. Usually, formulas are used in modeling functions. If we gave the formula <code>y ~ x1 + x2</code> to a function that fits a model, it would be the same as the math notation <span class="math inline">\(y = x1 + x2\)</span>. We will see this in action shortly.</p>
-<p>Aside over. Let’s look at one last type of plot: a scatter plot. Besides win percent, the only continuous variables are sugar and price percent. We’ll look at sugar percent. We can do this using the <code>plot</code> functions. This is a generic plotting function. We’ll use it here by specifying an x and a y. We’ll put sugar percent on the x axis with win percent on the y axis.</p>
+<p>Aside over. Let’s look at one last type of plot: a scatter plot. Besides win percent, the only continuous variables are sugar and price percent. We’ll look at sugar percent. We can do this using the <code>plot</code> function. This is a generic plotting function. We’ll use it here by specifying an x and a y. We’ll put sugar percent on the x axis with win percent on the y axis.</p>
 <pre class="r"><code>plot(candy$sugarpercent, candy$winpercent,
      xlab = &quot;Sugar Percentage&quot;,
      ylab = &quot;Win Percentage&quot;,
@@ -335,12 +335,6 @@ Win percentage grouped by whether the candy has chocolate or caramel.
 <h3>Fit a Model</h3>
 <p>Now that we have figured out how to make some plots, let’s fit a model. We’ll keep it simple by fitting a linear regression model. There are a TON of other models in R. A lot of times there are packages dedicated solely to fitting certain types of models or classes of models. Actually, that’s one of the reasons why R is so great.</p>
 <p>To fit a standard regression model, we can use the function <code>lm</code> (for linear model). Just like in <code>boxplot</code>, we use a formula to specify our model. We’ll use a few categorical variables along with the continuous variables. The response (or dependent variable, or y) will be winpercent.</p>
-<pre class="r"><code>names(candy)</code></pre>
-<pre><code>##  [1] &quot;competitorname&quot;   &quot;chocolate&quot;        &quot;fruity&quot;          
-##  [4] &quot;caramel&quot;          &quot;peanutyalmondy&quot;   &quot;nougat&quot;          
-##  [7] &quot;crispedricewafer&quot; &quot;hard&quot;             &quot;bar&quot;             
-## [10] &quot;pluribus&quot;         &quot;sugarpercent&quot;     &quot;pricepercent&quot;    
-## [13] &quot;winpercent&quot;</code></pre>
 <pre class="r"><code>fit &lt;- lm(winpercent ~ chocolate +
             caramel +
             nougat +
