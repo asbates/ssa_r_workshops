@@ -1,7 +1,7 @@
 ---
 title: "The Halloween Candy Showdown"
 author: "Andrew Bates"
-date: "10/22/2018"
+date: "10/31/2018"
 output: html_document
 ---
 
@@ -171,11 +171,11 @@ Again, the default values `boxplot` are fine if we are just looking at the plots
 
 boxplot(winpercent ~ chocolate,
         data = candy,
-        names = c("no chocolate", "yes"),
+        names = c("no", "yes"),
         main = "Win Percentage Grouped By Whether Candy Has Chocolate")
 boxplot(winpercent ~ caramel,
         data = candy,
-        names = c("no caramel", "yes"),
+        names = c("no", "yes"),
         main = "Win Percentage Grouped By Whether Candy Has Caramel")
 ```
 
@@ -308,9 +308,20 @@ predict(fit,
 
 That's it for this workshop. If you felt lost don't worry. You aren't going to understand everything right away. Hopefully we covered enough in this workshop that you can use it as starting point for your own analysis.
 
-I recommend that you conduct your own analysis on this data set or another of your choosing. If you really want to learn R then you need to use R. It might be painful at first but eventually you will get the hang of it. In addition, I recommend you don't just code the analysis but actually write it up with R Markdown. You should have an example of how to do everything you might need in the .Rmd document.
+I recommend that you conduct your own analysis on this data set or another of your choosing. If you really want to learn R then you need to *use* R. It might be painful at first but eventually you will get the hang of it. In addition, I recommend you don't just code the analysis but actually write it up with R Markdown. You should have an example of how to do everything you might need in the .Rmd document.
 
-Up next: Data Cleaning and Manipulation With dplyr!
+**Up next**: Data Cleaning and Manipulation With dplyr!
+
+If you can't wait until then, you might find these resources helpful:
+
+- [Google](https://www.google.com)
+    - This should be your go to if you have specific questions.
+    - Example: "logistic regression r"
+    
+- [R for Data Science](https://r4ds.had.co.nz)
+- [Data Camp](https://www.datacamp.com)
+- [RStudio](https://www.rstudio.com/online-learning/)
+- [Swirl](https://swirlstats.com)
 
 
 

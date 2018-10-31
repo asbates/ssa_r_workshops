@@ -2,7 +2,7 @@
 title: "An Introduction to the R Ecosystem"
 subtitle: "Or, the R Introduction You Wish You'd Gotten in Class"
 author: "Andrew Bates"
-date: "10/22/2018"
+date: "10/31/2018"
 output: 
   ioslides_presentation:
     logo: logo.jpeg
@@ -19,7 +19,7 @@ output:
 
 ## What This Workshop Is 
 
-> - A simple data analysis walkthrough using:
+> - A simple data analysis walk through using:
 > - R - the R language itself
 > - RStudio - an IDE for the R language
 > - R Markdown - a tool for generating documents that mix text with code
