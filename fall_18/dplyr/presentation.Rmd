@@ -97,9 +97,9 @@ clean_burrito <- dirty_burrito %>%
          Beans)
 ```
 
-
+<div class="notes">
 Note the use of backticks ` `` ` to handle the space in Mass
-
+</div>
 
 ## Selecting Variables of Interest
 ```{r clean_first_pass}
@@ -126,8 +126,9 @@ clean_burrito <- clean_burrito %>%
   )
 ```
 
+<div class="notes">
 We rename using `new_name = old_name`
-
+</div>
 
 ## Rename Variables
 
@@ -141,7 +142,7 @@ clean_burrito
 >     - `select`s variables (columns)
 > - What does `rename` do?
 >     - This should be obvious
-> - What does `%>%` do?
+> - What's this `%>%` thing?
 >     - The 'pipe' operator
 >     - From the package `magrittr`. Comes with `dplyr`
 >     - Improves readability of code
@@ -217,6 +218,7 @@ clean_burrito %>%
 
 ## Quiz 2
 
+
 > - What's the difference between `select` and `pull`?
 >     - `pull` gives us the *vector* `beans`
 >     - `select` gives us a *data frame* with the column `beans`
@@ -224,6 +226,16 @@ clean_burrito %>%
 >     - If the first argument is true (`beans` is "x" or `beans` is "X)
 >     - Do the second argument (set to "yes")
 >     - Otherwise, do the third argument (set to "no")
+
+
+<div class="notes">
+
+- Imagine we have a bag of candy
+- If we `select` Skittles, we get back a bag with only Skittles
+- If we `pull` Skittles, we get back Skittles without the bag
+
+</div>
+
 
 
 ## Summarize Overall Rating

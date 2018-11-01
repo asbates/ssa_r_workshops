@@ -239,7 +239,7 @@ dirty_burrito &lt;- read_csv(here(&quot;fall_18&quot;, &quot;data&quot;, &quot;b
          overall,
          Beans)</pre>
 
-<p>Note the use of backticks <code>``</code> to handle the space in Mass</p>
+<aside class='note'><section><p>Note the use of backticks <code>``</code> to handle the space in Mass</p></section></aside>
 
 </article></slide><slide class=""><hgroup><h2>Selecting Variables of Interest</h2></hgroup><article  id="selecting-variables-of-interest-1">
 
@@ -277,7 +277,7 @@ dirty_burrito &lt;- read_csv(here(&quot;fall_18&quot;, &quot;data&quot;, &quot;b
     beans = Beans
   )</pre>
 
-<p>We rename using <code>new_name = old_name</code></p>
+<aside class='note'><section><p>We rename using <code>new_name = old_name</code></p></section></aside>
 
 </article></slide><slide class=""><hgroup><h2>Rename Variables</h2></hgroup><article  id="rename-variables-1">
 
@@ -312,7 +312,7 @@ dirty_burrito &lt;- read_csv(here(&quot;fall_18&quot;, &quot;data&quot;, &quot;b
 <ul>
 <li>This should be obvious</li>
 </ul></li>
-<li>What does <code>%&gt;%</code> do?
+<li>What&#39;s this <code>%&gt;%</code> thing?
 
 <ul>
 <li>The &#39;pipe&#39; operator</li>
@@ -436,6 +436,12 @@ dirty_burrito &lt;- read_csv(here(&quot;fall_18&quot;, &quot;data&quot;, &quot;b
 <li>Otherwise, do the third argument (set to &quot;no&quot;)</li>
 </ul></li>
 </ul>
+
+<aside class='note'><section><ul>
+<li>Imagine we have a bag of candy</li>
+<li>If we <code>select</code> Skittles, we get back a bag with only Skittles</li>
+<li>If we <code>pull</code> Skittles, we get back Skittles without the bag</li>
+</ul></section></aside>
 
 </article></slide><slide class=""><hgroup><h2>Summarize Overall Rating</h2></hgroup><article  id="summarize-overall-rating">
 
