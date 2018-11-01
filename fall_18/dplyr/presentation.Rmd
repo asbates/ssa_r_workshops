@@ -5,10 +5,8 @@ author: "Andrew Bates"
 output: ioslides_presentation
 ---
 
-
 ## This Workshop
 
-> - Core functions of  the `dplyr` package
 > - `dplyr` is part of the [tidyverse](https://www.tidyverse.org):
 >     - "The tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures."
 > - "[dplyr](https://dplyr.tidyverse.org) is a grammar of data manipulation, providing a consistent set of verbs that help you solve the most common data manipulation challenges"
@@ -151,3 +149,164 @@ clean_burrito
 >         - "Take x. Apply the function h. Then g. Then f."
 >     - First argument is always the data
 >     - Allows for easy chaining of operations on data frame
+
+
+## Recode Beans
+
+ - Let's recode `beans`
+ - We'll assume that an `x` means the burrito has beans
+ - But first, let's see if `beans` takes any other values
+
+```{r beans-levels}
+clean_burrito %>%
+  pull(beans) %>%
+  as.factor() %>%
+  levels
+```
+
+- OK. So `beans` can be either big or little x.
+
+
+
+## Recode Beans
+
+- Let's set `beans` to "yes" if it's either "x" or "X" and "no" otherwise
+- We do this by `mutate`ing the original variable
+
+```{r beans-yesno}
+clean_burrito <- clean_burrito %>%
+  mutate(
+    beans = if_else(beans == "x" | beans == "X", "yes", "no")
+  )
+```
+
+
+
+
+## Recode Beans
+
+- Let's check to make sure we got what we wanted
+
+```{r beans-yesno-check}
+clean_burrito %>%
+  select(beans)
+```
+
+## Recode Beans
+
+- Whoops! It looks like we didn't replace the `NA` values.
+- Let's try again
+
+```{r beans-yesno-take2}
+clean_burrito <- clean_burrito %>%
+  mutate(
+    beans = if_else(is.na(beans), "no", beans)
+  )
+```
+
+
+## Recode Beans
+
+- And check our work
+
+```{r beans-yesno-check2}
+clean_burrito %>%
+  select(beans)
+```
+
+
+## Quiz 2
+
+> - What's the difference between `select` and `pull`?
+>     - `pull` gives us the *vector* `beans`
+>     - `select` gives us a *data frame* with the column `beans`
+> - What does `if_else()` do?
+>     - If the first argument is true (`beans` is "x" or `beans` is "X)
+>     - Do the second argument (set to "yes")
+>     - Otherwise, do the third argument (set to "no")
+
+
+## Summarize Overall Rating
+
+- Great success!
+- Let's take a closer look by `summarise`ing the data.
+- We'll start with `overall_rating`
+
+```{r overll-summ}
+clean_burrito %>%
+  summarise(
+    min = min(overall_rating),
+    mean = mean(overall_rating),
+    median = median(overall_rating),
+    max = max(overall_rating)
+  )
+```
+
+
+## Summarize Overall Rating
+
+- Uh oh! It looks like some burritos don't have ratings
+
+```{r overall-summ2}
+clean_burrito %>%
+  summarise(
+    min = min(overall_rating, na.rm = TRUE),
+    mean = mean(overall_rating, na.rm = TRUE),
+    median = median(overall_rating, na.rm = TRUE),
+    max = max(overall_rating, na.rm = TRUE)
+  )
+```
+
+## Summarize Rating By Burrito Type
+
+
+```{r overall-group-by-typ}
+clean_burrito %>%
+  group_by(burrito) %>%
+  summarise(
+    mean_rating = mean(overall_rating, na.rm = TRUE)
+  ) %>% 
+  top_n(5)
+```
+
+
+
+## Summarize Rating By Location
+
+
+```{r overall-group-by-loc}
+clean_burrito %>%
+  group_by(location) %>%
+  summarise(
+    mean_rating = mean(overall_rating, na.rm = TRUE)
+  ) %>% 
+  top_n(5)
+```
+
+
+## Average Rating for Burritos with Beans
+
+```{r overall-beans}
+clean_burrito %>%
+  filter(beans == "yes") %>%
+  group_by(location) %>%
+  summarise(
+    mean_rating = mean(overall_rating, na.rm = TRUE)
+  ) %>% 
+  top_n(-3)
+```
+
+
+## Quiz 3
+
+> - What did we learn?
+>     - California-like burritos are the way to go
+>     - Get one at Chili Peppers
+>     - Don't go to Goody's if you like beans
+
+
+
+
+
+
+

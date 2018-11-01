@@ -100,7 +100,6 @@
 <slide class=""><hgroup><h2>This Workshop</h2></hgroup><article  id="this-workshop">
 
 <ul class = 'build'>
-<li>Core functions of the <code>dplyr</code> package</li>
 <li><code>dplyr</code> is part of the <a href='https://www.tidyverse.org' title=''>tidyverse</a>:
 
 <ul>
@@ -326,6 +325,226 @@ dirty_burrito &lt;- read_csv(here(&quot;fall_18&quot;, &quot;data&quot;, &quot;b
 </ul></li>
 <li>First argument is always the data</li>
 <li>Allows for easy chaining of operations on data frame</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Recode Beans</h2></hgroup><article  id="recode-beans">
+
+<ul>
+<li>Let&#39;s recode <code>beans</code></li>
+<li>We&#39;ll assume that an <code>x</code> means the burrito has beans</li>
+<li>But first, let&#39;s see if <code>beans</code> takes any other values</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>clean_burrito %&gt;%
+  pull(beans) %&gt;%
+  as.factor() %&gt;%
+  levels</pre>
+
+<pre >## [1] &quot;x&quot; &quot;X&quot;</pre>
+
+<ul>
+<li>OK. So <code>beans</code> can be either big or little x.</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Recode Beans</h2></hgroup><article  id="recode-beans-1">
+
+<ul>
+<li>Let&#39;s set <code>beans</code> to &quot;yes&quot; if it&#39;s either &quot;x&quot; or &quot;X&quot; and &quot;no&quot; otherwise</li>
+<li>We do this by <code>mutate</code>ing the original variable</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>clean_burrito &lt;- clean_burrito %&gt;%
+  mutate(
+    beans = if_else(beans == &quot;x&quot; | beans == &quot;X&quot;, &quot;yes&quot;, &quot;no&quot;)
+  )</pre>
+
+</article></slide><slide class=""><hgroup><h2>Recode Beans</h2></hgroup><article  id="recode-beans-2">
+
+<ul>
+<li>Let&#39;s check to make sure we got what we wanted</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>clean_burrito %&gt;%
+  select(beans)</pre>
+
+<pre >## # A tibble: 385 x 1
+##    beans
+##    &lt;chr&gt;
+##  1 &lt;NA&gt; 
+##  2 &lt;NA&gt; 
+##  3 &lt;NA&gt; 
+##  4 &lt;NA&gt; 
+##  5 &lt;NA&gt; 
+##  6 yes  
+##  7 &lt;NA&gt; 
+##  8 &lt;NA&gt; 
+##  9 &lt;NA&gt; 
+## 10 &lt;NA&gt; 
+## # ... with 375 more rows</pre>
+
+</article></slide><slide class=""><hgroup><h2>Recode Beans</h2></hgroup><article  id="recode-beans-3">
+
+<ul>
+<li>Whoops! It looks like we didn&#39;t replace the <code>NA</code> values.</li>
+<li>Let&#39;s try again</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>clean_burrito &lt;- clean_burrito %&gt;%
+  mutate(
+    beans = if_else(is.na(beans), &quot;no&quot;, beans)
+  )</pre>
+
+</article></slide><slide class=""><hgroup><h2>Recode Beans</h2></hgroup><article  id="recode-beans-4">
+
+<ul>
+<li>And check our work</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>clean_burrito %&gt;%
+  select(beans)</pre>
+
+<pre >## # A tibble: 385 x 1
+##    beans
+##    &lt;chr&gt;
+##  1 no   
+##  2 no   
+##  3 no   
+##  4 no   
+##  5 no   
+##  6 yes  
+##  7 no   
+##  8 no   
+##  9 no   
+## 10 no   
+## # ... with 375 more rows</pre>
+
+</article></slide><slide class=""><hgroup><h2>Quiz 2</h2></hgroup><article  id="quiz-2">
+
+<ul class = 'build'>
+<li>What&#39;s the difference between <code>select</code> and <code>pull</code>?
+
+<ul>
+<li><code>pull</code> gives us the <em>vector</em> <code>beans</code></li>
+<li><code>select</code> gives us a <em>data frame</em> with the column <code>beans</code></li>
+</ul></li>
+<li>What does <code>if_else()</code> do?
+
+<ul>
+<li>If the first argument is true (<code>beans</code> is &quot;x&quot; or <code>beans</code> is &quot;X)</li>
+<li>Do the second argument (set to &quot;yes&quot;)</li>
+<li>Otherwise, do the third argument (set to &quot;no&quot;)</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Summarize Overall Rating</h2></hgroup><article  id="summarize-overall-rating">
+
+<ul>
+<li>Great success!</li>
+<li>Let&#39;s take a closer look by <code>summarise</code>ing the data.</li>
+<li>We&#39;ll start with <code>overall_rating</code></li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>clean_burrito %&gt;%
+  summarise(
+    min = min(overall_rating),
+    mean = mean(overall_rating),
+    median = median(overall_rating),
+    max = max(overall_rating)
+  )</pre>
+
+<pre >## # A tibble: 1 x 4
+##     min  mean median   max
+##   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1    NA    NA     NA    NA</pre>
+
+</article></slide><slide class=""><hgroup><h2>Summarize Overall Rating</h2></hgroup><article  id="summarize-overall-rating-1">
+
+<ul>
+<li>Uh oh! It looks like some burritos don&#39;t have ratings</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>clean_burrito %&gt;%
+  summarise(
+    min = min(overall_rating, na.rm = TRUE),
+    mean = mean(overall_rating, na.rm = TRUE),
+    median = median(overall_rating, na.rm = TRUE),
+    max = max(overall_rating, na.rm = TRUE)
+  )</pre>
+
+<pre >## # A tibble: 1 x 4
+##     min  mean median   max
+##   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
+## 1     1  3.60   3.75     5</pre>
+
+</article></slide><slide class=""><hgroup><h2>Summarize Rating By Burrito Type</h2></hgroup><article  id="summarize-rating-by-burrito-type">
+
+<pre class = 'prettyprint lang-r'>clean_burrito %&gt;%
+  group_by(burrito) %&gt;%
+  summarise(
+    mean_rating = mean(overall_rating, na.rm = TRUE)
+  ) %&gt;% 
+  top_n(5)</pre>
+
+<pre >## Selecting by mean_rating</pre>
+
+<pre >## # A tibble: 5 x 2
+##   burrito                  mean_rating
+##   &lt;chr&gt;                          &lt;dbl&gt;
+## 1 California (only cheese)           5
+## 2 California Burrito                 5
+## 3 Pollo california                   5
+## 4 Pork california                    5
+## 5 Surf and Turf                      5</pre>
+
+</article></slide><slide class=""><hgroup><h2>Summarize Rating By Location</h2></hgroup><article  id="summarize-rating-by-location">
+
+<pre class = 'prettyprint lang-r'>clean_burrito %&gt;%
+  group_by(location) %&gt;%
+  summarise(
+    mean_rating = mean(overall_rating, na.rm = TRUE)
+  ) %&gt;% 
+  top_n(5)</pre>
+
+<pre >## Selecting by mean_rating</pre>
+
+<pre >## # A tibble: 5 x 2
+##   location      mean_rating
+##   &lt;chr&gt;               &lt;dbl&gt;
+## 1 Chili Peppers         5  
+## 2 Colima&#39;s              4.9
+## 3 Humbertos             5  
+## 4 Kotija Jr.            5  
+## 5 Pedro&#39;s Tacos         5</pre>
+
+</article></slide><slide class=""><hgroup><h2>Average Rating for Burritos with Beans</h2></hgroup><article  id="average-rating-for-burritos-with-beans">
+
+<pre class = 'prettyprint lang-r'>clean_burrito %&gt;%
+  filter(beans == &quot;yes&quot;) %&gt;%
+  group_by(location) %&gt;%
+  summarise(
+    mean_rating = mean(overall_rating, na.rm = TRUE)
+  ) %&gt;% 
+  top_n(-3)</pre>
+
+<pre >## Selecting by mean_rating</pre>
+
+<pre >## # A tibble: 3 x 2
+##   location            mean_rating
+##   &lt;chr&gt;                     &lt;dbl&gt;
+## 1 Goody&#39;s                     1.9
+## 2 La Perla Cocina             2.5
+## 3 Raul&#39;s Mexican food         2</pre>
+
+</article></slide><slide class=""><hgroup><h2>Quiz 3</h2></hgroup><article  id="quiz-3">
+
+<ul class = 'build'>
+<li>What did we learn?
+
+<ul>
+<li>California-like burritos are the way to go</li>
+<li>Get one at Chili Peppers</li>
+<li>Don&#39;t go to Goody&#39;s if you like beans</li>
 </ul></li>
 </ul></article></slide>
 
