@@ -123,6 +123,20 @@
 </ul></li>
 </ul>
 
+<aside class='note'><section><ul>
+<li>How to follow along?
+
+<ol>
+<li>Type the code shown on the slides</li>
+<li>Click on the green arrow in the code chunk of the source file</li>
+<li>Copy the code in the source file into the console</li>
+</ol></li>
+<li>Start by typing out the code</li>
+<li>If that starts taking too long, then run the code chunk</li>
+<li>The purpose is to get a feel for the package</li>
+<li>We don&#39;t want to spend too much time trying to fix bugs caused by typing something incorrectly</li>
+</ul></section></aside>
+
 </article></slide><slide class=""><hgroup><h2>Setup</h2></hgroup><article  id="setup">
 
 <ol>
@@ -328,11 +342,17 @@ dirty_burrito &lt;- read_csv(here(&quot;fall_18&quot;, &quot;data&quot;, &quot;b
 </ul></li>
 </ul>
 
+<aside class='note'><section><ul>
+<li>It might seem a bit weird at first but you get used to it in time</li>
+<li>A lot of things are easier to read &amp; write than in base R</li>
+</ul></section></aside>
+
 </article></slide><slide class=""><hgroup><h2>Recode Beans</h2></hgroup><article  id="recode-beans">
 
 <ul>
 <li>Let&#39;s recode <code>beans</code></li>
 <li>We&#39;ll assume that an <code>x</code> means the burrito has beans</li>
+<li>And <code>NA</code> means there are no beans</li>
 <li>But first, let&#39;s see if <code>beans</code> takes any other values</li>
 </ul>
 
@@ -394,6 +414,11 @@ dirty_burrito &lt;- read_csv(here(&quot;fall_18&quot;, &quot;data&quot;, &quot;b
   mutate(
     beans = if_else(is.na(beans), &quot;no&quot;, beans)
   )</pre>
+
+<aside class='note'><section><ul>
+<li>We could also do <code>clean_burrito &lt;- clean_burrito %&gt;% mutate(beans = ifelse(is.na(beans), &quot;no&quot;, &quot;yes&quot;))</code> in one step</li>
+<li>In practice, you might do this to clean it up</li>
+</ul></section></aside>
 
 </article></slide><slide class=""><hgroup><h2>Recode Beans</h2></hgroup><article  id="recode-beans-4">
 
@@ -552,6 +577,27 @@ dirty_burrito &lt;- read_csv(here(&quot;fall_18&quot;, &quot;data&quot;, &quot;b
 <li>Get one at Chili Peppers</li>
 <li>Don&#39;t go to Goody&#39;s if you like beans</li>
 </ul></li>
+</ul>
+
+<aside class='note'><section><ul>
+<li>A couple of times, we ran some code, didn&#39;t like the output, and ran some more</li>
+<li>Why?</li>
+<li>I wanted to emulate what your workflow would be like as much as possible</li>
+<li>Not everything will work out the way you wanted the first time</li>
+<li>You have to look at the result and change things as necessary</li>
+<li>This is just how writing code works</li>
+<li>As we went along, we add more <code>%&gt;%</code>s to each thing we did</li>
+<li>Until you get more familiar with <code>%&gt;%</code>, you should just do one step at a time, check the output, then add another step</li>
+</ul></section></aside>
+
+</article></slide><slide class=""><hgroup><h2>Next Steps</h2></hgroup><article  id="next-steps">
+
+<ul>
+<li>Practice, practice, practice!</li>
+<li>Do something similar with a different/bigger subset or even the full data set</li>
+<li>Use R Markdown to write about what you do</li>
+<li>Look into other functions in <code>dplyr</code></li>
+<li>Teach your friends</li>
 </ul></article></slide>
 
 

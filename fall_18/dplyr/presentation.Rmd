@@ -13,6 +13,7 @@ output: ioslides_presentation
 > - You **will** need to do data manipulation and cleaning
 > - `dplyr` makes this easy and fun
 
+
 ## The Data 
 
 > - Reviews of burritos in San Diego
@@ -20,6 +21,18 @@ output: ioslides_presentation
 > - Find it
 >     - on his [website](https://github.com/asbates/ssa_r_workshops/tree/master/fall_18/data)
 >     - or [Kaggle](https://www.kaggle.com/srcole/burritos-in-san-diego/version/2#burritos_01022018.csv)
+
+
+<div class="notes">
+- How to follow along?
+    1. Type the code shown on the slides
+    2. Click on the green arrow in the code chunk of the source file
+    3. Copy the code in the source file into the console
+- Start by typing out the code
+- If that starts taking too long, then run the code chunk
+- The purpose is to get a feel for the package
+- We don't want to spend too much time trying to fix bugs caused by typing something incorrectly
+</div>
 
 
 ## Setup
@@ -50,6 +63,7 @@ dirty_burrito <- read_csv(here("fall_18", "data", "burritos_01022018.csv"))
 ```
 
 
+
 ## First Look
 
 ```{r first_look_print}
@@ -73,6 +87,8 @@ names(dirty_burrito)
 > - `Chips` encoding is not so obvious (does `x` mean yes?)
 > - What's the difference between `Tortilla` and `Wrap`?
 > - The last two can probably be figured out with a data dictionary
+
+
 
 ## Fixing The Issues
 
@@ -152,10 +168,16 @@ clean_burrito
 >     - Allows for easy chaining of operations on data frame
 
 
+<div class="notes">
+- It might seem a bit weird at first but you get used to it in time
+- A lot of things are easier to read & write than in base R
+</div>
+
 ## Recode Beans
 
  - Let's recode `beans`
  - We'll assume that an `x` means the burrito has beans
+ - And `NA` means there are no beans
  - But first, let's see if `beans` takes any other values
 
 ```{r beans-levels}
@@ -193,6 +215,7 @@ clean_burrito %>%
   select(beans)
 ```
 
+
 ## Recode Beans
 
 - Whoops! It looks like we didn't replace the `NA` values.
@@ -205,6 +228,11 @@ clean_burrito <- clean_burrito %>%
   )
 ```
 
+
+<div class="notes">
+- We could also do `clean_burrito <- clean_burrito %>% mutate(beans = ifelse(is.na(beans), "no", "yes"))` in one step
+- In practice, you might do this to clean it up
+</div>
 
 ## Recode Beans
 
@@ -317,8 +345,26 @@ clean_burrito %>%
 >     - Don't go to Goody's if you like beans
 
 
+<div class="notes">
+
+- A couple of times, we ran some code, didn't like the output, and ran some more
+- Why?
+- I wanted to emulate what your workflow would be like as much as possible
+- Not everything will work out the way you wanted the first time
+- You have to look at the result and change things as necessary
+- This is just how writing code works
+- As we went along, we add more `%>%`s to each thing we did
+- Until you get more familiar with `%>%`, you should just do one step at a time, check the output, then add another step
+</div>
 
 
+## Next Steps
+
+- Practice, practice, practice!
+- Do something similar with a different/bigger subset or even the full data set
+- Use R Markdown to write about what you do
+- Look into other functions in `dplyr`
+- Teach your friends
 
 
 
