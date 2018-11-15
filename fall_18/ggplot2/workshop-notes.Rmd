@@ -1,0 +1,29 @@
+---
+title: "Data Visualization With ggplot2"
+subtite: "SSA R Coding Workshop Series"
+author: "Andrew Bates"
+date: "11/29/2018"
+output: html_document
+---
+
+<!-- NOTE: before going further in this document, click on the "Knit" button above or press ctrl/command + shift + K -->
+
+
+
+### Welcome
+
+In this workshop we will be visualizing data using the R package `ggplot2`. From the [package website](https://ggplot2.tidyverse.org):
+
+> ggplot2 is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell ggplot2 how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details.
+
+We will talk more about what this means so don't worry if this doesn't make sense yet. Why are we even talking about a package for making plots? Why not just use the plotting tools included with R? R's plotting functions can do a lot and their inclusion as part of base R is one of the the things that makes R great. But there is still some room for improvement. For example, one of the nice things about `ggplot2` is its consistency. In base R we have `hist`, `boxplot`, and the generic`plot` (among others). But they all have slightly different ways we can use them (e.g. we can specify either a formula or an x to `boxplot`). `ggplot` provides a more consistent framework because we build each of these types of plots in a very similar way. `ggplot2` also makes things like coloring based on an extra variable easy and can automatically produce a legend. OK, hopefully that's enough motivation for you to be interested.
+
+### What Makes a Plot?
+
+Before we start actually building plots, let's take a few minutes to think about what goes into a plot. What are the components that make up a plot?
+
+
+
+
+
+
