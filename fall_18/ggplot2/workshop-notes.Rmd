@@ -20,7 +20,17 @@ We will talk more about what this means so don't worry if this doesn't make sens
 
 ### What Makes a Plot?
 
-Before we start actually building plots, let's take a few minutes to think about what goes into a plot. What are the components that make up a plot?
+Before we start actually building plots, let's take a few minutes to think about what goes into a plot. What are the components that make up a plot? If you're wondering why we are asking this, I find that when using `ggplot2` it helps to think about what the pieces of a plot are. Plots in `ggplot2` are created by specifying the components of a plot so we need to be aware of what they are if we want to use it.
+
+Consider the following plot
+
+```{r}
+
+```
+
+
+
+
 
 
 
