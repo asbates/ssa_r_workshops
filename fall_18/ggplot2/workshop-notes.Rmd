@@ -16,24 +16,109 @@ In this workshop we will be visualizing data using the R package `ggplot2`. From
 
 > ggplot2 is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell ggplot2 how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details.
 
-We will talk more about what this means so don't worry if this doesn't make sense yet. Why are we even talking about a package for making plots? Why not just use the plotting tools included with R? R's plotting functions can do a lot and their inclusion as part of base R is one of the the things that makes R great. But there is still some room for improvement. For example, one of the nice things about `ggplot2` is its consistency. In base R we have `hist`, `boxplot`, and the generic`plot` (among others). But they all have slightly different ways we can use them (e.g. we can specify either a formula or an x to `boxplot`). `ggplot` provides a more consistent framework because we build each of these types of plots in a very similar way. `ggplot2` also makes things like coloring based on an extra variable easy and can automatically produce a legend. OK, hopefully that's enough motivation for you to be interested.
+We will talk more about what this means so don't worry if this doesn't make sense yet. If you've been to the previous workshops I did, this one will be quite a bit different. It will be more interactive and we will be updating this document as we go. I will demonstrate how to make a couple of simple plots, then I will get your input and we will make some plots together.
+
+
 
 ### What Makes a Plot?
 
-Before we start actually building plots, let's take a few minutes to think about what goes into a plot. What are the components that make up a plot? If you're wondering why we are asking this, I find that when using `ggplot2` it helps to think about what the pieces of a plot are. Plots in `ggplot2` are created by specifying the components of a plot so we need to be aware of what they are if we want to use it.
+Before we start actually building plots, let's take a few minutes to think about what goes into a plot. Consider the following plot.
 
-Consider the following plot
+```{r plot-for-discuss, echo = FALSE}
+library(ggplot2)
 
-```{r}
-
+ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
+  geom_point() +
+  labs(x = "Displacement",
+       y = "Highway MPG",
+       color = "Class")
+  
 ```
 
 
+What are the components that go into this plot?
+
+- component 1
+- component 2
+- component 4
 
 
 
+This plot was made with one of the data sets that comes with `ggplot2`. The data set has information on fuel economy for cars from 1999-2008. The code to generate the plot is:
+
+```{r, eval = FALSE}
+ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
+  geom_point() +
+  labs(x = "Displacement",
+       y = "Highway MPG",
+       color = "Class")
+```
+
+
+Of the components we listed earlier, which ones do we see reflected in the code?
+
+- item 1
+- item 2
+
+Are there any aspects that don't appear in the code?
+
+- item 1
+- item 2
+
+
+### A First Plot
+
+Now that we have an idea of what some of the pieces of a plot are, let's make some of our own. We will be using data on NCAA men's basketball teams from the 2017-2018 season. The data was collected from [sports-reference.com](https://www.sports-reference.com/cbb/seasons/2018-advanced-school-stats.html). Let's start by loading some packages and reading in the data. Don't worry about the `here` package if you haven't seen it before. `ggplot2` is part of the tidyverse so we can load it by loading the `tidyverse` package. There are a few other tidyverse pacakges we will use which is why we laod `tidyverse` instead of just `ggplot2`. You don't need to worry about the other packages though. Just focus on the `ggplot2` parts.
+
+
+```{r setup-dont-run, eval = FALSE}
+library(here)
+library(tidyverse)
+bball <- read_csv(here("fall_18", "data", "ncaa-basketball-17-18.csv"))
+```
+
+
+```{r setup, message = FALSE}
+library(here)
+library(tidyverse)
+bball <- read_csv(here("fall_18", "data", "ncaa-basketball-17-18.csv"))
+```
+
+
+Let's make a bar chart that displays the number of wins for each team. We will plot the number of wins on the y axis and the school name on the x axis. There are 351 teams in the data set. Putting them all on the same plot will be a bit overwhelming so let's just look at the CSU and UC schools. We start by creating a new data frame with only these schools. Again, you don't need to worry about how this is done, just know that's what we are doing.
+
+```{r cal-wins}
+csuc <- bball %>% 
+  filter(str_detect(school, "Cal State") | 
+           str_detect(school, "San Diego State") |
+           str_detect(school, "UC"))
+
+
+ggplot(csuc, aes(x = school, y = wins)) +
+  geom_col()
+```
+
+
+This isn't so great. Let's rotate the names so we can read them and make the bars red and black for SDSU.
+
+
+```{r cal-wins-better}
+ggplot(csuc, aes(x = school, y = wins)) +
+  geom_col(fill = "black", color = "red") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+### What Do You Want To Plot?
+
+As I said before, I want this workshop to be interactive so I would like your input on what we should plot and then we can do it together. It doesn't have to be the NCAA basketball data. As long as we can all access the data easily, we can use any data set you like.
 
 
 
+### References
+
+- [ggplot2 website](https://ggplot2.tidyverse.org)
+- [R for Data Science](https://r4ds.had.co.nz): book by `ggplot2` package author
+- [Data Camp](https://www.datacamp.com): 3 `ggplot2` courses
 
 
