@@ -36,7 +36,7 @@ ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
 ```
 
 
-What are the components that go into this plot?
+What are the components that go into this plot? If we had to build this up piece by piece, what would the pieces be?
 
 - component 1
 - component 2
@@ -78,7 +78,7 @@ bball <- read_csv(here("fall_18", "data", "ncaa-basketball-17-18.csv"))
 ```
 
 
-```{r setup, message = FALSE}
+```{r setup, message = FALSE, echo = FALSE}
 library(here)
 library(tidyverse)
 bball <- read_csv(here("fall_18", "data", "ncaa-basketball-17-18.csv"))
@@ -111,7 +111,7 @@ ggplot(csuc, aes(x = school, y = wins)) +
 
 ### What Do You Want To Plot?
 
-As I said before, I want this workshop to be interactive so I would like your input on what we should plot and then we can do it together. It doesn't have to be the NCAA basketball data. As long as we can all access the data easily, we can use any data set you like.
+As I said before, I want this workshop to be interactive so I would like your input on what we should plot and then we can do it together. Would you like to plot a particular variable of the NCAA data? Would you like to see how to make a particular type of plot? It doesn't need to be the NCAA basketball data. As long as we can all access the data easily, we can use any data set you like.
 
 
 
