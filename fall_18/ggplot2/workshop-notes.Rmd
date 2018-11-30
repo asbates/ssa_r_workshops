@@ -38,9 +38,11 @@ ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
 
 What are the components that go into this plot? If we had to build this up piece by piece, what would the pieces be?
 
-- component 1
-- component 2
-- component 4
+- axes
+- axes labels
+- legend
+- data
+- color
 
 
 
@@ -57,12 +59,12 @@ ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
 
 Of the components we listed earlier, which ones do we see reflected in the code?
 
-- item 1
-- item 2
+- color
+- labels
 
 Are there any aspects that don't appear in the code?
 
-- item 1
+- legend
 - item 2
 
 
@@ -109,9 +111,87 @@ ggplot(csuc, aes(x = school, y = wins)) +
 ```
 
 
+```{r cal-wins-better}
+ggplot(csuc, aes(x = school, y = wins)) +
+  geom_col(fill = "black", color = "red") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  #theme_bw()
+  theme_classic()
+```
+
 ### What Do You Want To Plot?
 
 As I said before, I want this workshop to be interactive so I would like your input on what we should plot and then we can do it together. Would you like to plot a particular variable of the NCAA data? Would you like to see how to make a particular type of plot? It doesn't need to be the NCAA basketball data. As long as we can all access the data easily, we can use any data set you like.
+
+```{r win-loss}
+ggplot(bball, aes(x = win_loss_percent)) +
+  geom_histogram(bins = 30)
+```
+
+
+```{r win-loss-density}
+ggplot(bball, aes(x = win_loss_percent)) +
+  geom_density()
+```
+
+```{r win-loss-boxplot}
+ggplot(bball, aes(y = win_loss_percent)) +
+  geom_boxplot(fill = "blue", color = "red")
+```
+
+
+
+```{r mpg-again-separate}
+ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
+  geom_point() + 
+  geom_smooth(method = "lm") +
+  labs(x = "Displacement",
+       y = "Highway MPG",
+       color = "Class")
+```
+
+
+
+
+```{r mpg-again}
+ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
+  geom_point() + 
+  geom_smooth(method = "lm", color = "black") +
+  labs(x = "Displacement",
+       y = "Highway MPG",
+       color = "Class")
+```
+
+
+
+
+```{r win-loss-scale-log}
+ggplot(bball, aes(x = win_loss_percent)) +
+  geom_histogram(bins = 30) +
+  scale_x_log10()
+```
+
+
+```{r norm-qq}
+random_t <- data.frame(rt = rt(1e4, df = 4))
+
+ggplot(random_t, aes(sample = rt)) +
+  geom_qq() +
+  geom_qq_line(color = "blue")
+
+
+```
+
+```{r rt-ecdf}
+ggplot(random_t, aes(x = rt)) +
+  stat_ecdf()
+
+```
+
+
+
+
+
 
 
 
@@ -120,5 +200,4 @@ As I said before, I want this workshop to be interactive so I would like your in
 - [ggplot2 website](https://ggplot2.tidyverse.org)
 - [R for Data Science](https://r4ds.had.co.nz): book by `ggplot2` package author
 - [Data Camp](https://www.datacamp.com): 3 `ggplot2` courses
-
 
