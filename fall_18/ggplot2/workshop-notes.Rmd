@@ -65,7 +65,6 @@ Of the components we listed earlier, which ones do we see reflected in the code?
 Are there any aspects that don't appear in the code?
 
 - legend
-- item 2
 
 
 ### A First Plot
@@ -111,19 +110,15 @@ ggplot(csuc, aes(x = school, y = wins)) +
 ```
 
 
-```{r cal-wins-better}
-ggplot(csuc, aes(x = school, y = wins)) +
-  geom_col(fill = "black", color = "red") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  #theme_bw()
-  theme_classic()
-```
 
 ### What Do You Want To Plot?
 
 As I said before, I want this workshop to be interactive so I would like your input on what we should plot and then we can do it together. Would you like to plot a particular variable of the NCAA data? Would you like to see how to make a particular type of plot? It doesn't need to be the NCAA basketball data. As long as we can all access the data easily, we can use any data set you like.
 
-```{r win-loss}
+
+During the workshop we decided that we wanted to see how to make some of the standard plots. We started with a histogram, density, and boxplot of win/loss ratio.
+
+```{r win-loss-histogram}
 ggplot(bball, aes(x = win_loss_percent)) +
   geom_histogram(bins = 30)
 ```
@@ -140,6 +135,8 @@ ggplot(bball, aes(y = win_loss_percent)) +
 ```
 
 
+
+Next we took the first scatter plot from above and added a smoothing line with a linear model. The first one has a separate line for each class of car since `class` was one of the aesthetics specified in the `ggplot()` call. Then we saw how to override this aesthetic and have a single smoothing line for the entire data set.
 
 ```{r mpg-again-separate}
 ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
@@ -163,7 +160,7 @@ ggplot(mpg, aes(x = displ, y = hwy, color = class)) +
 ```
 
 
-
+An example of how to transform an axis scale.
 
 ```{r win-loss-scale-log}
 ggplot(bball, aes(x = win_loss_percent)) +
@@ -171,6 +168,8 @@ ggplot(bball, aes(x = win_loss_percent)) +
   scale_x_log10()
 ```
 
+
+A qqplot and qqline example.
 
 ```{r norm-qq}
 random_t <- data.frame(rt = rt(1e4, df = 4))
@@ -182,13 +181,24 @@ ggplot(random_t, aes(sample = rt)) +
 
 ```
 
+
+An cdf plot. Note the use of `stat_ecdf` instead of `geom_*`.
+
 ```{r rt-ecdf}
 ggplot(random_t, aes(x = rt)) +
   stat_ecdf()
 
 ```
 
+Finally, we saw how to change the theme of a plot.
 
+```{r cal-wins-theme}
+ggplot(csuc, aes(x = school, y = wins)) +
+  geom_col(fill = "black", color = "red") +
+  # theme_bw() another example of a built in theme
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+```
 
 
 
