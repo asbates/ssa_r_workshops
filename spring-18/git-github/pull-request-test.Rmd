@@ -1,0 +1,56 @@
+---
+title: "GitHub Pull Request Test"
+output: html_document
+---
+
+This is a test file to practice making a pull request to a GitHub repository.
+
+### What's a pull request?
+
+A pull request is when you make changes to a repository and want those changes integrated.
+If you own the repository or are a designated collaborator, you can push directly to the repo and don't really need to submit a pull request.
+Typically, pull requests are submitted to repositories where you aren't a contributor.
+For example, let's say you're working on a group project and Sally owns the repository containing the groups work.
+You would make changes to your part of the project and them submit the changes. Sally would then look at the changes and incorporate them if she is satisfied with the changes.
+
+
+### Branching
+
+Before submitting a pull request, you usually want to create a new **branch**. A branch is basically a copy of the repository, used to e.g. add a new feature. If anything goes wrong, the branch can be deleted without affecting the original repository. If things go right, you submit a pull request and the new branch gets **merged** into the master (main) branch.
+
+
+### Forking and Cloning
+
+But before you can create a new branch you need to first make a personal copy of the repository (i.e. Sally's repository in the example above). If you just want to play around with the repository and don't intend to modify anything, you can just **clone** it. However, if you think you might make changes, you can **fork** and clone. This makes a personal copy of the repository on your GitHub account which you can then clone to your personal computer.
+
+
+### What?
+
+Don't worry if this doesn't make a lot of sense. It will make more sense as you get more practice. Just follow the steps below.
+
+### What to do
+
+1. Go to my GitHub repository [https://github.com/asbates/ssa_r_workshops](https://github.com/asbates/ssa_r_workshops)
+
+2. Click the 'Fork' button on the top right of the page.
+
+3. Go to your copy of the repository on your GitHub account.
+
+4. Clone this repo (new RStudio project)
+
+5. Create a new branch ('New Branch' button in RStudio) and give it a name ('add-your-name-to-list') and make sure 'Sync branch with remote' is checked.
+
+6. Add your name to the list below (and Knit)
+
+7. Commit & push.
+
+8. Go back to my GitHub repository and click 'New Pull Request'
+
+
+The list of names
+
+- Andrew Bates
+
+
+
+
