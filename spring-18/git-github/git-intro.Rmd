@@ -1,0 +1,103 @@
+---
+title: "Git & GitHub"
+subtitle: "SSA Spring 2019 Workshop Series"
+author: "Andrew Bates"
+date: "2/25/19"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+# What is Git?
+--
+
+A distributed version control system
+
+---
+
+# What does that mean?
+
+--
+
+Allows several people to work on the same project (or just you)
+
+--
+
+While keeping track of changes
+
+---
+
+# Why would I want to use it?
+
+
+Have you ever had a set of files with names like
+
+- `first-draft`
+- `second-draft`
+- `second-draft-with-more-stuff`
+- `final`
+- `final-2.0`
+- `final-final`
+- `really-the-final`
+
+--
+
+Have you ever
+
+- written some code
+- realized it was incorrect
+- deleted it
+- uh oh! that actually was correct
+- hopefully I can remember...
+
+--
+
+You might need to use it in your job
+
+
+???
+you can't remember 
+
+---
+
+# What is GitHub?
+
+An online platform for hosting Git repositories (folders)
+
+With some extra features
+
+---
+
+# What will we be doing today?
+
+--
+
+Setting up Git/GitHub
+
+--
+
+Connecting Git with RStudio
+
+--
+
+Do some simple things to demonstrate how it all works
+
+--
+
+We will be following *Happy Git and GitHub for the useR* [https://happygitwithr.com](https://happygitwithr.com)
+
+
+
+---
+
+class: center, middle, inverse
+
+# Let's get to it!
